@@ -296,7 +296,7 @@ public abstract class BaseDDMServiceTestCase {
 		"com.liferay.dynamic.data.lists.model.DDLRecord";
 
 	protected static final String DDL_RECORD_SET_CLASS_NAME =
-		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
+		"com.liferay.dynamic.data.lists.model.DDLFormInstance";
 
 	protected DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper;
 	protected DDMStructureTestHelper ddmStructureTestHelper;

@@ -85,7 +85,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	@BeforeClass
 	public static void setUpClass() {
 		_classNameId = PortalUtil.getClassNameId(
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
+			"com.liferay.dynamic.data.lists.model.DDLFormInstance");
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");

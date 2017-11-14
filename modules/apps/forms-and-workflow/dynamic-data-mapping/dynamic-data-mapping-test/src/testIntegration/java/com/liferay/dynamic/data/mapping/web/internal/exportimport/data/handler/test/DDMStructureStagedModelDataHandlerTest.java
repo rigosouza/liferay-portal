@@ -346,7 +346,7 @@ public class DDMStructureStagedModelDataHandlerTest
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
+		"com.liferay.dynamic.data.lists.model.DDLFormInstance";
 
 	private DDMDataProvider _ddmDataProvider;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
