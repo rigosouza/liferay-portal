@@ -6,6 +6,6 @@
 	cmdver = liferay
 	commit = ba5658549fb42d5d6293460d51fbf31da49feaf0
 	mergebuttonmergecommits = false
-	mode = pull
+	mode = push
 	parent = f531d499161cc9b5e3462a58fb101dadec779579
 	remote = git@github.com:liferay/com-liferay-dynamic-data-mapping.git
