@@ -162,7 +162,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_RECORD_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_FORM_INSTANCE_RECORD_CHECKBOX" />
 			<var name="roleTitle" value="Power User" />
 		</execute>
 
