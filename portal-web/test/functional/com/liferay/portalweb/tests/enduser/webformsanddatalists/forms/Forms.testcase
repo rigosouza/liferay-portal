@@ -2083,6 +2083,7 @@
 	</command>
 
 	<command name="SubmitForm3x3Layout" priority="4">
+		<property name="portal.subrepo" value="false" />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
