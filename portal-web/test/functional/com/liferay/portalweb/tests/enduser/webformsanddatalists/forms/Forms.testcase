@@ -2575,7 +2575,7 @@
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitSuccessfully" />
 
 		<execute macro="Navigator#openURL" />
 
