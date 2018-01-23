@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>MENUBAR_CATEGORY</td>
-	<td>//ul[@role='menubar']//a[@role='menuitem' and contains(.,'${key_category}')]</td>
+	<td>//ul[@role='menubar']//a[@role='menuitem' and contains(.,'${key_category}')] | //nav[contains(@class,'navbar')]//a[contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>

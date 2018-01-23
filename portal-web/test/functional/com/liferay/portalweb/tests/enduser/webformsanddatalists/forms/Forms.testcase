@@ -489,8 +489,8 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Forms and Workflow" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -1200,8 +1200,8 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Forms and Workflow" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -1258,7 +1258,7 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="category" value="Forms and Workflow" />
+			<var name="navItem" value="Forms and Workflow" />
 			<var name="configurationName" value="Dynamic Data Lists" />
 		</execute>
 
@@ -1334,12 +1334,12 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="category" value="Forms and Workflow" />
+			<var name="navItem" value="Forms and Workflow" />
 			<var name="configurationName" value="Dynamic Data Mapping Service" />
 		</execute>
 
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Other" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Other" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -1365,8 +1365,8 @@
 
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Foundation" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Foundation" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -1417,7 +1417,7 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="category" value="Foundation" />
+			<var name="navItem" value="Foundation" />
 			<var name="configurationName" value="JavaScript Loader" />
 		</execute>
 	</command>
@@ -1442,8 +1442,8 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Forms and Workflow" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -1479,7 +1479,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="category" value="Forms and Workflow" />
+			<var name="navItem" value="Forms and Workflow" />
 			<var name="configurationName" value="Forms" />
 		</execute>
 
