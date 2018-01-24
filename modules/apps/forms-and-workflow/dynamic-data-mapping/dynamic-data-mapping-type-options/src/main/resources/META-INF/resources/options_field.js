@@ -240,9 +240,15 @@ AUI.add(
 
 						var index = options.indexOf(option);
 
-						if (option.get("value").length > 0) {
-							var value = instance.getValue();
+						var value = instance.getValue();
 
+						var itemsFound = value.filter(
+							function(item) {
+								return item.value === option.get('value');
+							}
+						);
+
+						if (itemsFound.length > 0) {
 							value.splice(index, 1);
 
 							instance._setValue(value);
