@@ -669,7 +669,9 @@
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitLocalizedSuccessfully">
+			<var name="buttonName" value="Enviar" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 
