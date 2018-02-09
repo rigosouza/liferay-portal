@@ -100,7 +100,7 @@ AUI.add(
 						instance._createBadgeTooltip();
 
 						instance._eventHandlers.push(
-							A.one('doc').after('click', A.bind(instance._afterClickOutside, instance)),
+							A.one('doc').after('click', A.bind(instance._afterDocumentClick, instance)),
 							instance.bindContainerEvent('click', instance._handleContainerClick, '.' + CSS_FORM_FIELD_CONTAINER)
 						);
 					},
@@ -247,7 +247,7 @@ AUI.add(
 						}
 					},
 
-					_afterClickOutside: function(event) {
+					_afterDocumentClick: function(event) {
 						var instance = this;
 
 						if (!instance._preventDocumentClick && instance._isClickingOutSide(event)) {
