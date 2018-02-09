@@ -294,6 +294,8 @@ AUI.add(
 					_handleContainerClick: function(event) {
 						var instance = this;
 
+						event.stopPropagation();
+
 						var target = event.target;
 
 						var addRepeatebleButton = target.hasClass('lfr-ddm-form-field-repeatable-add-button');
