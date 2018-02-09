@@ -250,6 +250,7 @@ AUI.add(
 					_afterDocumentClick: function(event) {
 						var instance = this;
 
+						instance.closeList();
 					},
 
 					_createBadgeTooltip: function() {
