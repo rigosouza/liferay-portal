@@ -250,11 +250,6 @@ AUI.add(
 					_afterDocumentClick: function(event) {
 						var instance = this;
 
-						if (!instance._preventDocumentClick && instance._isClickingOutSide(event)) {
-							instance.closeList();
-						}
-
-						instance._preventDocumentClick = false;
 					},
 
 					_createBadgeTooltip: function() {
@@ -317,8 +312,6 @@ AUI.add(
 						else if (!addRepeatebleButton && !deleteRepeatebleButton) {
 							instance._handleSelectTriggerClick(event);
 						}
-
-						instance._preventDocumentClick = true;
 					},
 
 					_handleItemClick: function(target) {
@@ -383,24 +376,6 @@ AUI.add(
 						);
 
 						return hasOption;
-					},
-
-					_isClickingOutSide: function(event) {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var triggers = instance.get('triggers');
-
-						if (triggers.length) {
-							for (var i = 0; i < triggers.length; i++) {
-								if (triggers[i].contains(event.target)) {
-									return false;
-								}
-							}
-						}
-
-						return !container.contains(event.target);
 					},
 
 					_isListOpen: function() {
