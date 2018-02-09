@@ -111,6 +111,8 @@ AUI.add(
 						if (instance._tooltip) {
 							instance._tooltip.destroy();
 						}
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
 					cleanSelect: function() {
