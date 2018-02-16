@@ -8,6 +8,14 @@
 		</execute>
 	</command>
 
+	<command name="changeFieldType">
+		<var name="key_selectOption" value="${selectOption}" />
+
+		<execute function="Click" locator1="FormFields#CHANGE_FIELD_TYPE_BUTTON" />
+
+		<execute function="AssertClick" locator1="FormFields#CHANGE_FIELD_TYPE_OPTION" value1="${key_selectOption}" />
+	</command>
+
 	<command name="deleteOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
