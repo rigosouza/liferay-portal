@@ -9,6 +9,8 @@ AUI.add(
 
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
+		var Lang = A.Lang;
+
 		var FormBuilderFieldsSettingsSidebar = A.Component.create(
 			{
 				ATTRS: {
@@ -298,6 +300,21 @@ AUI.add(
 						var instance = this;
 
 						return node.ancestorsByClassName('.ddm-form-field-container').size();
+					},
+
+					_isValueEmpty: function(settingsFormFieldContextValue) {
+
+						if (Lang.isString(settingsFormFieldContextValue)) {
+							return settingsFormFieldContextValue.trim() === '';
+						}
+						else if (Lang.isArray(settingsFormFieldContextValue)) {
+							return settingsFormFieldContextValue.length === 0;
+						}
+						else if (Lang.isObject(settingsFormFieldContextValue)) {
+							return A.Object.isEmpty(settingsFormFieldContextValue);
+						}
+
+						return true;
 					},
 
 					_loadFieldSettingsForm: function(field) {
