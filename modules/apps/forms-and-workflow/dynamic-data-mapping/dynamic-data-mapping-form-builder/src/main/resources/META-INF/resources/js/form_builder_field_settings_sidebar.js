@@ -302,6 +302,10 @@ AUI.add(
 						return node.ancestorsByClassName('.ddm-form-field-container').size();
 					},
 
+					_isSameType: function(previousSettingsFormFieldContext, currentSettingsFormFieldContext) {
+						return (typeof currentSettingsFormFieldContext.value === typeof previousSettingsFormFieldContext.value);
+					},
+
 					_isValueEmpty: function(settingsFormFieldContextValue) {
 
 						if (Lang.isString(settingsFormFieldContextValue)) {
