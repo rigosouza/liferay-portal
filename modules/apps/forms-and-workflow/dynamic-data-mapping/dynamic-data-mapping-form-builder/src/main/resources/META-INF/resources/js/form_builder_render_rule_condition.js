@@ -91,15 +91,19 @@ AUI.add(
 
 				instance._conditions[index + '-condition-first-operand'].destroy();
 				instance._conditions[index + '-condition-operator'].destroy();
+				instance._conditions[index + '-condition-second-operand-date'].destroy();
 				instance._conditions[index + '-condition-second-operand-type'].destroy();
 				instance._conditions[index + '-condition-second-operand-select'].destroy();
-				instance._conditions[index + '-condition-second-operand-input'].destroy();
+				instance._conditions[index + '-condition-second-operand-input-text'].destroy();
+				instance._conditions[index + '-condition-second-operand-numeric'].destroy();
 
 				delete instance._conditions[index + '-condition-first-operand'];
 				delete instance._conditions[index + '-condition-operator'];
+				delete instance._conditions[index + '-condition-second-operand-date'];
 				delete instance._conditions[index + '-condition-second-operand-type'];
 				delete instance._conditions[index + '-condition-second-operand-select'];
-				delete instance._conditions[index + '-condition-second-operand-input'];
+				delete instance._conditions[index + '-condition-second-operand-input-text'];
+				delete instance._conditions[index + '-condition-second-operand-numeric'];
 			},
 
 			_getConditions: function() {
