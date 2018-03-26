@@ -283,12 +283,18 @@ AUI.add(
 				var instance = this;
 
 				switch (type) {
+				case 'date':
+					return instance._conditions[index + '-condition-second-operand-date'];
+				case 'double':
+					return instance._conditions[index + '-condition-second-operand-numeric'];
 				case 'fields':
 					return instance._conditions[index + '-condition-second-operand-select'];
+				case 'integer':
+					return instance._conditions[index + '-condition-second-operand-numeric'];
 				case 'options':
 					return instance._conditions[index + '-condition-second-operand-options-select'];
 				default:
-					return instance._conditions[index + '-condition-second-operand-input'];
+					return instance._conditions[index + '-condition-second-operand-input-text'];
 				}
 			},
 
