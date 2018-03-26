@@ -668,7 +668,7 @@ AUI.add(
 
 				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
 
-				var visible = instance._isConstant(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+				var visible = instance._isText(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
 
 				if (condition && instance._isBinaryCondition(index) && visible) {
 					value = condition.operands[1].value;
