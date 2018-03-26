@@ -676,7 +676,7 @@ AUI.add(
 
 				var field = instance.createTextField(
 					{
-						fieldName: index + '-condition-second-operand-input',
+						fieldName: index + '-condition-second-operand-input-text',
 						options: [],
 						placeholder: '',
 						showLabel: false,
@@ -688,7 +688,9 @@ AUI.add(
 
 				field.render(container);
 
-				instance._conditions[index + '-condition-second-operand-input'] = field;
+				instance._conditions[index + '-condition-second-operand-input-text'] = field;
+			},
+
 			_renderSecondOperandNumeric: function(index, condition, container) {
 				var instance = this;
 
