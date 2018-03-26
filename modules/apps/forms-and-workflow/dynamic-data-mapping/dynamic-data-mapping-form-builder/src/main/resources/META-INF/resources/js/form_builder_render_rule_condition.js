@@ -328,6 +328,26 @@ AUI.add(
 				return value || '';
 			},
 
+			_getType: function(value, options) {
+				var instance = this;
+
+				var option;
+
+				var type;
+
+				for (var i = 0; i < options.length; i++) {
+					option = options[i];
+
+					if (value.indexOf(option.value) > -1) {
+						type = option.type;
+
+						break;
+					}
+				}
+
+				return type;
+			},
+
 			_handleAddConditionClick: function() {
 				var instance = this;
 
