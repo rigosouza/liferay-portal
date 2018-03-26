@@ -925,16 +925,28 @@ AUI.add(
 
 						var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 
+						var secondOperand = '';
+
 						if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
 							secondOperandOptions.set('options', options);
 							secondOperandOptions.set('visible', true);
 
 							secondOperandFields.cleanSelect();
 						}
-						else {
-							var secondOperand = instance._getSecondOperand(index, 'input');
+						else if ((secondOperandTypeValue === 'integer') || (secondOperandTypeValue === 'double') || (secondOperandTypeValue === 'date')) {
+							secondOperand = instance._getSecondOperand(index, secondOperandTypeValue);
 
 							if (secondOperand) {
+								secondOperand.set('visible', true);
+								secondOperandFields.cleanSelect();
+								secondOperandOptions.cleanSelect();
+							}
+						}
+						else {
+							secondOperand = instance._getSecondOperand(index, 'input-text');
+
+							if (secondOperand) {
+								instance._hideSecondOperandField(index);
 								secondOperand.set('visible', true);
 								secondOperandFields.cleanSelect();
 								secondOperandOptions.cleanSelect();
@@ -951,15 +963,23 @@ AUI.add(
 
 				var options = [];
 
+				var typeValue = '';
+
 				if (secondOperandType) {
 					if (operator === 'belongs-to') {
 						options = instance.get('roles');
 					}
 					else {
+						if (instance._getFieldType(instance._getFirstOperandValue(index)) === 'date') {
+							typeValue = 'date';
+						}
+						else {
+							typeValue = instance._getFieldDataType(instance._getFirstOperandValue(index));
+						}
 						options = [
 							{
 								label: instance.get('strings').value,
-								value: instance._getFieldDataType(instance._getFirstOperandValue(index))
+								value: typeValue
 							},
 							{
 								label: instance.get('strings').otherField,
