@@ -458,17 +458,23 @@ AUI.add(
 			_hideSecondOperandField: function(index) {
 				var instance = this;
 
+				var secondOperandDate = instance._getSecondOperand(index, 'date');
 				var secondOperandFields = instance._getSecondOperand(index, 'fields');
 				var secondOperandOptions = instance._getSecondOperand(index, 'options');
-				var secondOperandsInput = instance._getSecondOperand(index, 'input');
+				var secondOperandsInput = instance._getSecondOperand(index, 'input-text');
+				var secondOperandsNumeric = instance._getSecondOperand(index, 'integer');
 
+				instance._setVisibleToOperandField(secondOperandDate, false);
 				instance._setVisibleToOperandField(secondOperandFields, false);
 				instance._setVisibleToOperandField(secondOperandOptions, false);
 				instance._setVisibleToOperandField(secondOperandsInput, false);
+				instance._setVisibleToOperandField(secondOperandsNumeric, false);
 
+				secondOperandDate.set('value', '');
 				secondOperandFields.set('value', '');
 				secondOperandOptions.set('value', '');
 				secondOperandsInput.set('value', '');
+				secondOperandsNumeric.set('value', '');
 			},
 
 			_hideSecondOperandTypeField: function(index) {
