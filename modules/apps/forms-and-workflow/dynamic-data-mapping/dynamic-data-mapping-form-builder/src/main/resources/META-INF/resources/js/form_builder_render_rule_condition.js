@@ -689,6 +689,37 @@ AUI.add(
 				field.render(container);
 
 				instance._conditions[index + '-condition-second-operand-input'] = field;
+			_renderSecondOperandNumeric: function(index, condition, container) {
+				var instance = this;
+
+				var value = '';
+
+				var firstOperand = instance._getFirstOperand(index);
+
+				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
+
+				var visible = instance._isNumber(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+
+				if (condition && instance._isBinaryCondition(index) && visible) {
+					value = condition.operands[1].value;
+				}
+
+				var fieldNumber = instance.createNumericField(
+					{
+						fieldName: index + '-condition-second-operand-numeric',
+						options: [],
+						placeholder: '',
+						readOnly: false,
+						showLabel: false,
+						strings: {},
+						value: value,
+						visible: visible
+					}
+				);
+
+				fieldNumber.render(container);
+
+				instance._conditions[index + '-condition-second-operand-numeric'] = fieldNumber;
 			},
 
 			_renderSecondOperandSelectField: function(index, condition, container) {
