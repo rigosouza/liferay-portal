@@ -140,11 +140,27 @@ AUI.add(
 							);
 						}
 						else if (instance._isConstant(secondOperandTypeValue)) {
-							if (instance._getSecondOperandValue(index, 'input')) {
+							if (instance._getSecondOperandValue(index, 'date')) {
+								condition.operands.push(
+									{
+										type: instance._getFieldDataType(instance._getSecondOperandTypeValue(index)),
+										value: instance._getSecondOperandValue(index, 'date')
+									}
+								);
+							}
+							else if (instance._getSecondOperandValue(index, 'integer')) {
 								condition.operands.push(
 									{
 										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
-										value: instance._getSecondOperandValue(index, 'input')
+										value: instance._getSecondOperandValue(index, 'integer')
+									}
+								);
+							}
+							else if (instance._getSecondOperandValue(index, 'input-text')) {
+								condition.operands.push(
+									{
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										value: instance._getSecondOperandValue(index, 'input-text')
 									}
 								);
 							}
