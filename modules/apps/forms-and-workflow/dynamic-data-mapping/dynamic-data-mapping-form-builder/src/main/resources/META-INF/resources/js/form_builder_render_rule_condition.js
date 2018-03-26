@@ -873,7 +873,7 @@ AUI.add(
 						);
 					}
 				}
-				else if (dataType === 'double' || dataType === 'integer') {
+				else if (dataType === 'date' || dataType === 'double' || dataType === 'integer') {
 					for (var j = 0; j < operatorTypes.number.length; j++) {
 						options.push(
 							A.merge(
