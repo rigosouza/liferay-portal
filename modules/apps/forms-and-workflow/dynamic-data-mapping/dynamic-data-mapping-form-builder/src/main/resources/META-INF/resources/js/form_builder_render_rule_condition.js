@@ -625,6 +625,40 @@ AUI.add(
 				}
 			},
 
+			_renderSecondOperandDate: function(index, condition, container) {
+				var instance = this;
+
+				var value = '';
+
+				var firstOperand = instance._getFirstOperand(index);
+
+				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
+
+				var visible = instance._isDate(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+
+				if (condition && instance._isBinaryCondition(index) && visible) {
+					value = condition.operands[1].value;
+				}
+
+				var fieldDate = instance.createDateField(
+					{
+						fieldName: index + '-condition-second-operand-date',
+						label: '',
+						options: [],
+						placeholder: '',
+						readOnly: false,
+						showLabel: false,
+						strings: {},
+						value: value,
+						visible: visible
+					}
+				);
+
+				fieldDate.render(container);
+
+				instance._conditions[index + '-condition-second-operand-date'] = fieldDate;
+			},
+
 			_renderSecondOperandInput: function(index, condition, container) {
 				var instance = this;
 
