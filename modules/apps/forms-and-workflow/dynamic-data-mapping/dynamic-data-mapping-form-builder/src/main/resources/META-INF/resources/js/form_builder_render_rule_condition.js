@@ -388,7 +388,26 @@ AUI.add(
 
 					if (fieldName.match('-condition-first-operand')) {
 						var operatorSelected = instance._getOperator(index);
-						var type = instance._getDataType(field.getValue(), options);
+
+						var type;
+
+						if (instance._getType(field.getValue(), options) === 'date') {
+							type = 'date';
+							instance._conditions[index + '-condition-second-operand-input-text'].set('value', '');
+							instance._conditions[index + '-condition-second-operand-numeric'].set('value', '');
+						}
+						else {
+							type = instance._getDataType(field.getValue(), options);
+
+							if (instance._getType(field.getValue(), options) === 'numeric') {
+								instance._conditions[index + '-condition-second-operand-input-text'].set('value', '');
+								instance._conditions[index + '-condition-second-operand-date'].set('value', '');
+							}
+							else {
+								instance._conditions[index + '-condition-second-operand-numeric'].set('value', '');
+								instance._conditions[index + '-condition-second-operand-date'].set('value', '');
+							}
+						}
 
 						operatorSelected.cleanSelect();
 
