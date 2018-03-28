@@ -48,9 +48,10 @@ AUI.add(
 				instance._renderFirstOperand(index, condition, contentBox.one('.condition-if-' + index));
 				instance._renderOperator(index, condition, contentBox.one('.condition-operator-' + index));
 				instance._renderSecondOperandType(index, condition, contentBox.one('.condition-the-' + index));
-				instance._renderSecondOperandInput(index, condition, contentBox.one('.condition-type-value-' + index));
-				instance._renderSecondOperandNumeric(index, condition, contentBox.one('.condition-type-value-' + index));
-				instance._renderSecondOperandDate(index, condition, contentBox.one('.condition-type-value-' + index));
+				instance._renderSecondOperand(index, condition, contentBox.one('.condition-type-value-' + index), '-condition-second-operand-date');
+				instance._renderSecondOperand(index, condition, contentBox.one('.condition-type-value-' + index), '-condition-second-operand-input-text');
+				instance._renderSecondOperand(index, condition, contentBox.one('.condition-type-value-' + index), '-condition-second-operand-integer');
+				instance._renderSecondOperand(index, condition, contentBox.one('.condition-type-value-' + index), '-condition-second-operand-decimal');
 				instance._renderSecondOperandSelectField(index, condition, contentBox.one('.condition-type-value-' + index));
 				instance._renderSecondOperandSelectOptions(index, condition, contentBox.one('.condition-type-value-options-' + index));
 
@@ -70,6 +71,61 @@ AUI.add(
 
 				operator.cleanSelect();
 				operator.render();
+			},
+
+			_createField: function(index, condition, typeValue, operand, fieldName) {
+				var instance = this;
+				var visible = false;
+				var field;
+				var fieldConfig = {
+					fieldName: index + fieldName,
+					options: [],
+					placeholder: '',
+					showLabel: false,
+					strings: {},
+					value: ''
+				};
+
+				var notFieldList = !instance._isFieldList(operand);
+
+				if (fieldName == '-condition-second-operand-date') {
+					visible = instance._isDate(typeValue) && notFieldList;
+					if (condition && instance._isBinaryCondition(index) && visible) {
+						fieldConfig.value = condition.operands[1].value;
+					}
+					fieldConfig.visible = visible;
+					fieldConfig.readOnly = false;
+					fieldConfig.label = '';
+					field = instance.createDecimalField(fieldConfig);
+				}
+				else if (fieldName == '-condition-second-operand-input-text') {
+					visible = instance._isText(typeValue) && notFieldList;
+					if (condition && instance._isBinaryCondition(index) && visible) {
+						fieldConfig.value = condition.operands[1].value;
+					}
+					fieldConfig.visible = visible;
+					field = instance.createTextField(fieldConfig);
+				}
+				else if (fieldName == '-condition-second-operand-integer') {
+					visible = instance._isInteger(typeValue) && notFieldList;
+					if (condition && instance._isBinaryCondition(index) && visible) {
+						fieldConfig.value = condition.operands[1].value;
+					}
+					fieldConfig.visible = visible;
+					fieldConfig.readOnly = false;
+					field = instance.createIntegerField(fieldConfig);
+				}
+				else if (fieldName == '-condition-second-operand-decimal') {
+					visible = instance._isDecimal(typeValue) && notFieldList;
+					if (condition && instance._isBinaryCondition(index) && visible) {
+						fieldConfig.value = condition.operands[1].value;
+					}
+					fieldConfig.visible = visible;
+					fieldConfig.readOnly = false;
+					field = instance.createDecimalField(fieldConfig);
+				}
+
+				return field;
 			},
 
 			_deleteCondition: function(index) {
@@ -95,7 +151,8 @@ AUI.add(
 				instance._conditions[index + '-condition-second-operand-type'].destroy();
 				instance._conditions[index + '-condition-second-operand-select'].destroy();
 				instance._conditions[index + '-condition-second-operand-input-text'].destroy();
-				instance._conditions[index + '-condition-second-operand-numeric'].destroy();
+				instance._conditions[index + '-condition-second-operand-integer'].destroy();
+				instance._conditions[index + '-condition-second-operand-decimal'].destroy();
 
 				delete instance._conditions[index + '-condition-first-operand'];
 				delete instance._conditions[index + '-condition-operator'];
@@ -103,7 +160,8 @@ AUI.add(
 				delete instance._conditions[index + '-condition-second-operand-type'];
 				delete instance._conditions[index + '-condition-second-operand-select'];
 				delete instance._conditions[index + '-condition-second-operand-input-text'];
-				delete instance._conditions[index + '-condition-second-operand-numeric'];
+				delete instance._conditions[index + '-condition-second-operand-integer'];
+				delete instance._conditions[index + '-condition-second-operand-decimal'];
 			},
 
 			_getConditions: function() {
@@ -153,6 +211,14 @@ AUI.add(
 									{
 										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
 										value: instance._getSecondOperandValue(index, 'integer')
+									}
+								);
+							}
+							else if (instance._getSecondOperandValue(index, 'double')) {
+								condition.operands.push(
+									{
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										value: instance._getSecondOperandValue(index, 'double')
 									}
 								);
 							}
@@ -286,11 +352,11 @@ AUI.add(
 				case 'date':
 					return instance._conditions[index + '-condition-second-operand-date'];
 				case 'double':
-					return instance._conditions[index + '-condition-second-operand-numeric'];
+					return instance._conditions[index + '-condition-second-operand-decimal'];
 				case 'fields':
 					return instance._conditions[index + '-condition-second-operand-select'];
 				case 'integer':
-					return instance._conditions[index + '-condition-second-operand-numeric'];
+					return instance._conditions[index + '-condition-second-operand-integer'];
 				case 'options':
 					return instance._conditions[index + '-condition-second-operand-options-select'];
 				default:
@@ -332,7 +398,6 @@ AUI.add(
 				var instance = this;
 
 				var option;
-
 				var type;
 
 				for (var i = 0; i < options.length; i++) {
@@ -388,25 +453,29 @@ AUI.add(
 
 					if (fieldName.match('-condition-first-operand')) {
 						var operatorSelected = instance._getOperator(index);
-
 						var type;
 
-						if (instance._getType(field.getValue(), options) === 'date') {
+						if (instance._getType(field.getValue(), options) == 'date') {
 							type = 'date';
 							instance._conditions[index + '-condition-second-operand-input-text'].set('value', '');
-							instance._conditions[index + '-condition-second-operand-numeric'].set('value', '');
+							instance._conditions[index + '-condition-second-operand-integer'].set('value', '');
+							instance._conditions[index + '-condition-second-operand-decimal'].set('value', '');
 						}
 						else {
 							type = instance._getDataType(field.getValue(), options);
-
-							if (instance._getType(field.getValue(), options) === 'numeric') {
+							if (instance._getType(field.getValue(), options) == 'integer') {
 								instance._conditions[index + '-condition-second-operand-input-text'].set('value', '');
-								instance._conditions[index + '-condition-second-operand-date'].set('value', '');
+								instance._conditions[index + '-condition-second-operand-decimal'].set('value', '');
+							}
+							else if (instance._getType(field.getValue(), options) == 'double') {
+								instance._conditions[index + '-condition-second-operand-input-text'].set('value', '');
+								instance._conditions[index + '-condition-second-operand-integer'].set('value', '');
 							}
 							else {
-								instance._conditions[index + '-condition-second-operand-numeric'].set('value', '');
-								instance._conditions[index + '-condition-second-operand-date'].set('value', '');
+								instance._conditions[index + '-condition-second-operand-integer'].set('value', '');
+								instance._conditions[index + '-condition-second-operand-decimal'].set('value', '');
 							}
+							instance._conditions[index + '-condition-second-operand-date'].set('value', '');
 						}
 
 						operatorSelected.cleanSelect();
@@ -461,20 +530,23 @@ AUI.add(
 				var secondOperandDate = instance._getSecondOperand(index, 'date');
 				var secondOperandFields = instance._getSecondOperand(index, 'fields');
 				var secondOperandOptions = instance._getSecondOperand(index, 'options');
+				var secondOperandsDecimal = instance._getSecondOperand(index, 'double');
 				var secondOperandsInput = instance._getSecondOperand(index, 'input-text');
-				var secondOperandsNumeric = instance._getSecondOperand(index, 'integer');
+				var secondOperandsInteger = instance._getSecondOperand(index, 'integer');
 
 				instance._setVisibleToOperandField(secondOperandDate, false);
 				instance._setVisibleToOperandField(secondOperandFields, false);
 				instance._setVisibleToOperandField(secondOperandOptions, false);
 				instance._setVisibleToOperandField(secondOperandsInput, false);
-				instance._setVisibleToOperandField(secondOperandsNumeric, false);
+				instance._setVisibleToOperandField(secondOperandsInteger, false);
+				instance._setVisibleToOperandField(secondOperandsDecimal, false);
 
 				secondOperandDate.set('value', '');
 				secondOperandFields.set('value', '');
 				secondOperandOptions.set('value', '');
 				secondOperandsInput.set('value', '');
-				secondOperandsNumeric.set('value', '');
+				secondOperandsInteger.set('value', '');
+				secondOperandsDecimal.set('value', '');
 			},
 
 			_hideSecondOperandTypeField: function(index) {
@@ -503,7 +575,13 @@ AUI.add(
 			_isDate: function(operandTypeValue) {
 				var instance = this;
 
-				return operandTypeValue === 'date';
+				return operandTypeValue == 'date';
+			},
+
+			_isDecimal: function(operandTypeValue) {
+				var instance = this;
+
+				return operandTypeValue == 'double';
 			},
 
 			_isFieldList: function(field) {
@@ -514,16 +592,16 @@ AUI.add(
 				return instance._getFieldOptions(value).length > 0 && instance._getFieldType(value) !== 'text';
 			},
 
-			_isNumber: function(operandTypeValue) {
+			_isInteger: function(operandTypeValue) {
 				var instance = this;
 
-				return operandTypeValue === 'double' || operandTypeValue === 'integer';
+				return operandTypeValue == 'integer';
 			},
 
 			_isText: function(operandTypeValue) {
 				var instance = this;
 
-				return operandTypeValue === 'string';
+				return operandTypeValue == 'string';
 			},
 
 			_isUnaryCondition: function(index) {
@@ -625,103 +703,20 @@ AUI.add(
 				}
 			},
 
-			_renderSecondOperandDate: function(index, condition, container) {
+			_renderSecondOperand: function(index, condition, container, fieldName) {
 				var instance = this;
-
-				var value = '';
 
 				var firstOperand = instance._getFirstOperand(index);
 
 				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
 
-				var visible = instance._isDate(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+				var field = instance._createField(index, condition, secondOperandTypeValue, firstOperand, fieldName);
 
-				if (condition && instance._isBinaryCondition(index) && visible) {
-					value = condition.operands[1].value;
+				if (field) {
+					field.render(container);
 				}
 
-				var fieldDate = instance.createDateField(
-					{
-						fieldName: index + '-condition-second-operand-date',
-						label: '',
-						options: [],
-						placeholder: '',
-						readOnly: false,
-						showLabel: false,
-						strings: {},
-						value: value,
-						visible: visible
-					}
-				);
-
-				fieldDate.render(container);
-
-				instance._conditions[index + '-condition-second-operand-date'] = fieldDate;
-			},
-
-			_renderSecondOperandInput: function(index, condition, container) {
-				var instance = this;
-
-				var value = '';
-
-				var firstOperand = instance._getFirstOperand(index);
-
-				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
-
-				var visible = instance._isText(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
-
-				if (condition && instance._isBinaryCondition(index) && visible) {
-					value = condition.operands[1].value;
-				}
-
-				var field = instance.createTextField(
-					{
-						fieldName: index + '-condition-second-operand-input-text',
-						options: [],
-						placeholder: '',
-						showLabel: false,
-						strings: {},
-						value: value,
-						visible: visible
-					}
-				);
-
-				field.render(container);
-
-				instance._conditions[index + '-condition-second-operand-input-text'] = field;
-			},
-
-			_renderSecondOperandNumeric: function(index, condition, container) {
-				var instance = this;
-
-				var value = '';
-
-				var firstOperand = instance._getFirstOperand(index);
-
-				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
-
-				var visible = instance._isNumber(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
-
-				if (condition && instance._isBinaryCondition(index) && visible) {
-					value = condition.operands[1].value;
-				}
-
-				var fieldNumber = instance.createNumericField(
-					{
-						fieldName: index + '-condition-second-operand-numeric',
-						options: [],
-						placeholder: '',
-						readOnly: false,
-						showLabel: false,
-						strings: {},
-						value: value,
-						visible: visible
-					}
-				);
-
-				fieldNumber.render(container);
-
-				instance._conditions[index + '-condition-second-operand-numeric'] = fieldNumber;
+				instance._conditions[index + fieldName] = field;
 			},
 
 			_renderSecondOperandSelectField: function(index, condition, container) {
@@ -873,7 +868,7 @@ AUI.add(
 						);
 					}
 				}
-				else if (dataType === 'date' || dataType === 'double' || dataType === 'integer') {
+				else if ((dataType == 'date') || (dataType == 'double') || (dataType == 'integer')) {
 					for (var j = 0; j < operatorTypes.number.length; j++) {
 						options.push(
 							A.merge(
@@ -927,13 +922,13 @@ AUI.add(
 
 						var secondOperand = '';
 
-						if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
+						if ((options.length > 0) && (instance._getFieldType(instance._getFirstOperandValue(index)) != 'text')) {
 							secondOperandOptions.set('options', options);
 							secondOperandOptions.set('visible', true);
 
 							secondOperandFields.cleanSelect();
 						}
-						else if ((secondOperandTypeValue === 'integer') || (secondOperandTypeValue === 'double') || (secondOperandTypeValue === 'date')) {
+						else if ((secondOperandTypeValue == 'integer') || (secondOperandTypeValue == 'double') || (secondOperandTypeValue == 'date')) {
 							secondOperand = instance._getSecondOperand(index, secondOperandTypeValue);
 
 							if (secondOperand) {
@@ -959,18 +954,16 @@ AUI.add(
 			_updateSecondOperandType: function(operator, index) {
 				var instance = this;
 
-				var secondOperandType = instance._getSecondOperandType(index);
-
 				var options = [];
-
+				var secondOperandType = instance._getSecondOperandType(index);
 				var typeValue = '';
 
 				if (secondOperandType) {
-					if (operator === 'belongs-to') {
+					if (operator == 'belongs-to') {
 						options = instance.get('roles');
 					}
 					else {
-						if (instance._getFieldType(instance._getFirstOperandValue(index)) === 'date') {
+						if (instance._getFieldType(instance._getFirstOperandValue(index)) == 'date') {
 							typeValue = 'date';
 						}
 						else {
